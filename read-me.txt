@@ -1,0 +1,145 @@
+The following code is executed in python 2.7.
+You can run the code on the command window by entering python (file name).py
+Or you can do it by pressing f5(run module) if it is in the python IDLE environment
+
+---------------------------------------------------------------------------------------------------------- 
+Project Report is named as ShailShahDrashtiBhutaEswaraSaiSuryaTejaGummalla.Pdf
+---- 7 + 1 Runs and evaluations (Phase 2) Output Files-----
+
+IN THE (RUN OUTPUTS) FOLDER
+
+BM-STEM.txt -- comntains the result of Task3 B for the stemmed corpus and query.
+
+BM-STEM-PR.txt-- has the Precision and Recall result of the above.
+
+Run-1-tfidf.txt and excel file -- contain the results of Run1 that is using Tfidf.
+
+Run1-tfidf-PR.txt and excel file contain the precision and recall results for above,
+
+Run1-tfidf-PR-eval.txt contain the evaluation phase value for tfidf, ie. MAP MRR and p@5 and 20.
+
+Run2-Cosine.txt and excel file -- contain the results of Run2 that is using Cosine Similarity.
+
+Run2-Cosine-PR.txt and excel file contain the precision and recall results for above.
+
+Run2-Cosine-PR-eval.txt contain the evaluation phase value for Cosine Simiarity, ie. MAP MRR and p@5 and 20.
+
+Run3-BM.txt and excel file -- contain the results of Run3 that is using BM25.
+
+Run3-BM-PR.txt and excel file contain the precision and recall results for above,
+
+Run3-BM-PR-eval.txt contain the evaluation phase value for BM25, ie. MAP MRR and p@5 and 20.
+
+Run4-lucene.txt and excel file -- contain the results of Run4 that is using lucene system.
+
+Run4-lucene-PR.txt and excel file contain the precision and recall results for above,
+
+Run4-Lucene-eval.txt contain the evaluation phase value for lucene, ie. MAP MRR and p@5 and 20.
+ 
+Run5-BM(stop).txt and excel file -- contain the results of Run5 that is using BM25 with stopping.
+
+Run5-BM(stop)-PR.txt and excel file contain the precision and recall results for above,
+
+Run5-BM(stop)-PR-eval.txt contain the evaluation phase value for BM25 with stopping, ie. MAP MRR and p@5 and 20.
+
+Run6-BM(expand).txt and excel file -- contain the results of Run6 that is pseudo relence feedback BM25 + KL divergence.
+
+Run6-BM(expand)-PR.txt and excel file contain the precision and recall results for above,
+
+Run6-BM(expand)-PR-eval.txt contain the evaluation phase value for pseudo relence feedback BM25 + KL divergence, ie. MAP MRR and p@5 and 20.
+
+Run7-Cosine.txt and excel file -- contain the results of Run7 that is using Cosine Similarity with stopping.
+
+Run7-Cosine-PR.txt and excel file contain the precision and recall results for above.
+
+Run7-Cosine-PR-eval.txt contain the evaluation phase value for Cosine Simiarity with stopping, ie. MAP MRR and p@5 and 20.
+---------------------------------------------------------------------------------------------------------- 
+
+-------Search Engine Code ---------------
+
+TfIdf.py Contains the code to Compute the base line Runs using TfIdf as the model. (Run 1)
+ -- Code is both for P and R calculation, and also initial baseline run result. 
+
+cosine-similarity.py contains the code to compute the result using cosine similarity as the Model.(RUN 2)
+ -- Code is both for P and R calculation, and also initial baseline run result. 
+
+CS-stop.py ontains the code to process the Run and produce the result using model Cosine Similarity + Stopping.
+ -- Code is both for P and R calculation, and also initial baseline run result. 
+
+
+---------Required text files to run code-------------
+inverted_index.txt the inverted index for the cleaned corpus
+inverted_index_stop.txt inveretd index for the Corpus with stopped words removed.
+
+doc_len.tx contins the document length of each document.
+doc_len_stop.txt contains the document length of each ddocument with stop words removed.
+
+commomn.txt contains the list of stop words provided.
+
+Doc_list.txt list of ll the documents in the query.
+Doc_list.py traverses the document corpus and collects the document name.
+
+
+-----------fOR LUCENE IN FOLDER - LUCENE SEARCH----------
+1. Download Lucene 4.7.2: https://archive.apache.org/dist/lucene/java/4.7.2/
+2. Create a new Java project add add these .jar files to it: lucene-core-4.7.2.jar, lucene-query-parser-4.7.2.jar, and lucene-analyzers-common-4.7.2.jar
+3. Add the cleaned corpus directory to the project (cacm_clean) and create a new folder (index3) for storing the index
+4. Add the source code files in /src to the project's source code.
+
+CacmCleaner is a module that cleans the corpus and the queries. Here is how you get it running:
+1. Create a new Java project
+2. Add the cacm corpus to the project, along with cacm_query.txt from CacmCleaner/ folder
+3. Add Main.java from the CacmCleaner/src folder to the source code.
+
+------------------------For Run 3 5 6 + Stemming run= in folder (Run 3 5 6)--------------------------------
+To Run:
+
+Baseline BM25 (run 3):
+open bm25.py (the code is setup with the initial baseline requirements)
+run the code 
+You will need Inveted_index.txt , queries.txt ,cacm.rel,doc_length.txt in order to run the code
+The output will run3.txt
+
+
+Query-Expansion:
+open file kld_pseudo.py(the code is setup with the initial baseline requirements)
+You will need Inveted_index.txt , queries.txt ,cacm.rel, common_words.txt , doc_length.txt
+You will need the run-3.txt file produced in baseline run
+Run the code. It will generate queries_expanded_pseudo_run3.txt which contains the new terms 
+open read.py(the code is setup with the initial baseline requirements) and run the file
+This will generate expanded-queries-pseudo_run3.txt which contains the expanded query
+
+BM25 with expanded query (run 6):
+open bm25.py 
+replace the file name "queries.txt" at line #35 to "expanded-queries-pseudo_run3.txt" 
+replace the file name "run3.txt" at line line# 125 to "run3-expanded.txt"
+run the file 
+The output of the run will be in file run3-expanded.txt.
+
+BM25 + Stopping (Run 5):
+open bm25_stop.py (the code is setup with the initial baseline requirements)
+You will need Inveted_index_stop.txt , queries.txt ,cacm.rel, common_words.txt , doc_length_stop.txt
+run the code and the output will be generated in bm25stoprun.txt
+
+BM25 + Stemming:
+open bm25.py
+You will need Inveted_index_stem.txt , queries_stem.txt ,cacm_stem.txt, common_words.txt , doc_length.txt
+replace the file name at line # 10 to Inveted_index_stem.txt
+replace the file name at line # 35 to queries_stem.txt
+replace the file name at line #45 to cacm_stem.txt
+replace the file name at line #125 to bm25stem.txt
+run the code and the output will be generated in file bm25stem.txt
+
+Evaluation(phase 2)
+open evaluation.py
+write the name of the output run file at line # 5 and line # 32 based on for which run you want the evaluation
+following are the names to be used for the runs:
+run3.txt --> bm25 Baseline run (run 3)
+run3-expanded.txt ---> bm25+expansion (run 6)
+bm25stoprun.txt ---> BM25 + stopping (run 5)
+bm25stem.txt  ---> BM25 + stemming
+
+--------------------------------------BONUS TASK----------------------------------
+
+snipetgen.py contains the code for the snippet generator.
+snipet.txt contains the result of that for a run of the BM25 model(Run 3) 
